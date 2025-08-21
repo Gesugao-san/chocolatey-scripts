@@ -2,7 +2,7 @@
 CD C:\
 CLS
 
-IF "%path:chocolatey=%" EQU "%path%" (
+@IF "%path:chocolatey=%" EQU "%path%" (
 	ECHO Chocolatey not found
 	ECHO https://chocolatey.org/install
 	EXIT 1
@@ -23,6 +23,9 @@ CLS
 choco upgrade all -y
 @REM Confirm to proceed.
 PAUSE
+
+@REM See https://redd.it/15oyh34
+yt-dlp -U
 
 py -V&pip -V
 python.exe -m pip install --upgrade pip
