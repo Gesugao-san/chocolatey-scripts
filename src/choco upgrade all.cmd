@@ -3,9 +3,11 @@ CD C:\
 CLS
 
 @IF "%path:chocolatey=%" EQU "%path%" (
-	ECHO Chocolatey not found
-	ECHO https://chocolatey.org/install
-	EXIT 1
+	ECHO Chocolatey not found, installing...
+	@REM ECHO https://chocolatey.org/install
+	@REM EXIT 1
+	@SEE ALSO https://gist.github.com/krayfaus/2a68fbc7386d3cdbcb45c577b1d4bae8
+	powershell -c "irm https://community.chocolatey.org/install.ps1|iex"
 )
 @REM SET "choco=%ChocolateyInstall%\bin\choco.exe"
 @REM choco upgrade all --noop
@@ -25,23 +27,39 @@ choco upgrade all -y
 PAUSE
 
 cmd /c "scoop update *"
+cmd /c "scoop cache rm *"
+cmd /c "scoop cleanup *"
+cmd /c "scoop checkup"
 cmd /c "scoop status"
 
 @REM See https://redd.it/15oyh34
 yt-dlp -U
 
 py -V&pip -V
-python.exe -m pip install --upgrade pip
+@REM python.exe -m pip install --upgrade pip
+choco install jq -y
+@REM See https://github.com/pypa/pip/issues/4551#issuecomment-2324945466
+for /F %i in ('pip list --format json ^| jq -r ".[].name"') do pip install -U %i
 pip cache purge
 pip -V
 
+choco install nodejs -y
 node -v&npm -v
-npm install -g npm@latest
+@REM Upgrading to the latest version of npm
+npm install npm@latest -g
+@REM Updating all globally-installed packages
+npm update -g
 @REM npm cache verify
 npm cache clean -f
 npm -v
 
+choco install yarn -y
+@REM npm install --global yarn
+yarn --version
 yarn cache clean --all
+
+choco install pnpm -y
+@REM scoop install nodejs nodejs-lts pnpm
 @REM pnpm store path
 @REM pnpm cache delete
 pnpm store prune
