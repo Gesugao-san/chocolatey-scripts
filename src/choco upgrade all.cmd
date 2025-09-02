@@ -24,8 +24,8 @@ choco upgrade all -y
 @REM Confirm to proceed.
 PAUSE
 
-scoop update *
-scoop status
+cmd /c "scoop update *"
+cmd /c "scoop status"
 
 @REM See https://redd.it/15oyh34
 yt-dlp -U
