@@ -39,7 +39,7 @@ py -V&pip -V
 @REM python.exe -m pip install --upgrade pip
 choco install jq -y
 @REM See https://github.com/pypa/pip/issues/4551#issuecomment-2324945466
-for /F %i in ('pip list --format json ^| jq -r ".[].name"') do pip install -U %i
+for /F %%i in ('pip list --format json ^| jq -r ".[].name"') do pip install -U %%i
 pip cache purge
 pip -V
 
