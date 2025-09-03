@@ -49,7 +49,7 @@ pip cache purge
 pip -V
 
 choco install nodejs -y
-node -v&npm -v
+cmd /c "node -v&npm -v"
 @REM Upgrading to the latest version of npm
 npm install npm@latest -g
 @REM Updating all globally-installed packages
