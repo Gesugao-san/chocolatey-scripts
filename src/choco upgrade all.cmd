@@ -1,3 +1,4 @@
+SETLOCAL ENABLEEXTENSIONS
 @REM Moving to C drive to not advert user name.
 CD C:\
 CLS
@@ -32,7 +33,10 @@ PAUSE
 @REM cmd /c "scoop cleanup *"
 @REM cmd /c "scoop checkup"
 @REM cmd /c "scoop status"
-FOR %%i IN ("status" "update *" "cache rm *" "cleanup *" "checkup" "status") DO (cmd /c "scoop %%~i")
+FOR %%i IN ("status" "update *" "cache rm *" "cleanup *" "checkup" "status") DO (
+	set "command=%%~i"
+	cmd /c "scoop %%~i"
+)
 
 @REM See https://redd.it/15oyh34
 yt-dlp -U
