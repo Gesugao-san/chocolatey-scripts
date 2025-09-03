@@ -51,17 +51,17 @@ pip -V
 choco install nodejs -y
 cmd /c "node -v&npm -v"
 @REM Upgrading to the latest version of npm
-npm install npm@latest -g
+cmd /c "npm install npm@latest -g"
 @REM Updating all globally-installed packages
-npm update -g
+cmd /c "npm update -g"
 @REM npm cache verify
-npm cache clean -f
-npm -v
+cmd /c "npm cache clean -f"
+cmd /c "npm -v"
 
 choco install yarn -y
 @REM npm install --global yarn
-yarn --version
-yarn cache clean --all
+cmd /c "yarn --version"
+cmd /c "yarn cache clean --all"
 
 choco install pnpm -y
 @REM scoop install nodejs nodejs-lts pnpm
