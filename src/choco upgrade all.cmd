@@ -6,7 +6,7 @@ CLS
 	ECHO Chocolatey not found, installing...
 	@REM ECHO https://chocolatey.org/install
 	@REM EXIT 1
-	@SEE ALSO https://gist.github.com/krayfaus/2a68fbc7386d3cdbcb45c577b1d4bae8
+	@REM SEE ALSO https://gist.github.com/krayfaus/2a68fbc7386d3cdbcb45c577b1d4bae8
 	powershell -c "irm https://community.chocolatey.org/install.ps1|iex"
 )
 @REM SET "choco=%ChocolateyInstall%\bin\choco.exe"
@@ -32,7 +32,7 @@ PAUSE
 @REM cmd /c "scoop cleanup *"
 @REM cmd /c "scoop checkup"
 @REM cmd /c "scoop status"
-for %%i in ("status" "update *" "cache rm *" "cleanup *" "checkup" "status") do cmd /c "scoop %%~i"
+FOR %%i IN ("status" "update *" "cache rm *" "cleanup *" "checkup" "status") DO cmd /c "scoop %%~i"
 
 @REM See https://redd.it/15oyh34
 yt-dlp -U
@@ -41,7 +41,7 @@ py -V&pip -V
 @REM python.exe -m pip install --upgrade pip
 choco install jq -y
 @REM See https://github.com/pypa/pip/issues/4551#issuecomment-2324945466
-for /F %%i in ('pip list --format json ^| jq -r ".[].name"') do pip install -U %%i
+FOR /F %%i IN ('pip list --format json ^| jq -r ".[].name"') DO pip install -U %%i
 pip cache purge
 pip -V
 
@@ -71,5 +71,5 @@ choco cache list
 @REM Remove cached data.
 choco cache remove
 
-@REM Unnessesary, except if PowerShell was in the updated list.
+@REM Unnessesary, except if PowerShell was IN the updated list.
 RefreshEnv
