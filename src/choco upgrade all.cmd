@@ -26,11 +26,13 @@ choco upgrade all -y
 @REM Confirm to proceed.
 PAUSE
 
-cmd /c "scoop update *"
-cmd /c "scoop cache rm *"
-cmd /c "scoop cleanup *"
-cmd /c "scoop checkup"
-cmd /c "scoop status"
+@REM cmd /c "scoop status"
+@REM cmd /c "scoop update *"
+@REM cmd /c "scoop cache rm *"
+@REM cmd /c "scoop cleanup *"
+@REM cmd /c "scoop checkup"
+@REM cmd /c "scoop status"
+for %i in ("status" "update *" "cache rm *" "cleanup *" "checkup" "status") do cmd /c "scoop %~i"
 
 @REM See https://redd.it/15oyh34
 yt-dlp -U
