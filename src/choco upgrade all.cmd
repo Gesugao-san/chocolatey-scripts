@@ -51,7 +51,7 @@ FOR %%i IN (cleanup checkup status) do cmd /c "scoop %%i *"
 yt-dlp -U
 
 @REM Python & pip updates
-@FOR %%i IN (python python2) DO @choco list --limit-output -e "%%i" | findstr /i "%%i" >nul || choco install "%%i" -y
+@FOR %%i IN (python) DO @choco list --limit-output -e "%%i" | findstr /i "%%i" >nul || choco install "%%i" -y
 py -V&pip -V
 python.exe -m pip install --upgrade pip
 @REM Installing jq (if not installed) for pip packages update
