@@ -4,7 +4,7 @@ setlocal EnableDelayedExpansion
 set "SCRIPT_NAME=%~nx0"
 set "SCRIPT_PATH=%~f0"
 set "TEMP_DIR=%TEMP%\self_update"
-set "REPO_URL=https://raw.githubusercontent.com/username/repository/main"
+set "REPO_URL=https://raw.githubusercontent.com/Gesugao-san/chocolatey-scripts/refs/heads/master/src/self_updating_test.bat"
 
 :: Create temporary directory
 if not exist "%TEMP_DIR%" mkdir "%TEMP_DIR%"
