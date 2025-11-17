@@ -1,5 +1,5 @@
-@CHCP 65001 >nul
-@SET PYTHONIOENCODING=UTF-8
+@REM @CHCP 65001 >nul
+@REM @SET PYTHONIOENCODING=UTF-8
 @REM Moving to C drive to not advert user name.
 CD C:\
 CLS
