@@ -26,32 +26,41 @@ choco upgrade all -y
 @REM Confirm to proceed.
 @REM PAUSE
 
-@WHERE scoop >nul 2>&1
-@IF ERRORLEVEL 1 (
-  @WHERE powershell >nul 2>&1 && (
+@ECHO OFF
+WHERE scoop >nul 2>&1
+IF ERRORLEVEL 1 (
+  WHERE powershell >nul 2>&1 && (
+    @ECHO ON
     echo Installing Scoop...
     powershell -Command "Set-ExecutionPolicy RemoteSigned -Scope CurrentUser"
     powershell -Command "irm get.scoop.sh -outfile '%TEMP%\scoop-install.ps1'"
     powershell -Command "& '%TEMP%\scoop-install.ps1' -RunAsAdmin"
-    @WHERE scoop >nul 2>&1
-    @IF ERRORLEVEL 1 (
+    @ECHO OFF
+    WHERE scoop >nul 2>&1
+    IF ERRORLEVEL 1 (
+      @ECHO ON
       ECHO Scoop installed! Restart me if I crashed or looped here, please. Sorry.
       RefreshEnv
     ) else (
+      @ECHO ON
       echo Scoop installation failed!
     )
   )
 )
+
+@ECHO ON
 @REM FOR %%i IN ("status" "update *" "cache rm *" "cleanup *" "checkup" "status") DO (cmd /c "scoop %%~i")
 FOR %%i IN (status update) do cmd /c "scoop %%i *"
 cmd /c "scoop cache rm *"
 FOR %%i IN (cleanup checkup status) do cmd /c "scoop %%i *"
 
 @REM See https://redd.it/15oyh34
-@WHERE yt-dlp >nul 2>&1 && yt-dlp -U
+WHERE yt-dlp >nul 2>&1 && (yt-dlp -U)
 
 @REM Python & pip updates
-@WHERE py >nul 2>&1 && (
+@ECHO OFF
+WHERE py >nul 2>&1 && (
+  @ECHO ON
   @FOR %%i IN (python) DO @choco list --limit-output -e "%%i" | findstr /i "%%i" >nul || choco install "%%i" -y
   py -V&pip -V
   python.exe -m pip install --upgrade pip
@@ -61,7 +70,9 @@ FOR %%i IN (cleanup checkup status) do cmd /c "scoop %%i *"
   pip cache purge
 )
 
-@WHERE node >nul 2>&1 && (
+@ECHO OFF
+WHERE node >nul 2>&1 && (
+  @ECHO ON
   @FOR %%i IN (nodejs) DO @choco list --limit-output -e "%%i" | findstr /i "%%i" >nul || choco install "%%i" -y
   cmd /c "node -v&npm -v"
   @REM Upgrading to the latest version of npm
@@ -73,14 +84,18 @@ FOR %%i IN (cleanup checkup status) do cmd /c "scoop %%i *"
   cmd /c "npm -v"
 )
 
+@ECHO OFF
 @WHERE yarn >nul 2>&1 && (
+  @ECHO ON
   @FOR %%i IN (yarn) DO @choco list --limit-output -e "%%i" | findstr /i "%%i" >nul || choco install "%%i" -y
   @REM npm install --global yarn
   cmd /c "yarn --version"
   cmd /c "yarn cache clean --all"
 )
 
+@ECHO OFF
 @WHERE pnpm >nul 2>&1 && (
+  @ECHO ON
   @FOR %%i IN (pnpm) DO @choco list --limit-output -e "%%i" | findstr /i "%%i" >nul || choco install "%%i" -y
   @REM scoop install nodejs nodejs-lts pnpm
   @REM pnpm store path
