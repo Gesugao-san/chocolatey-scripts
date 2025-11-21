@@ -5,6 +5,7 @@ CD C:\
 @ECHO ON
 CLS
 
+@REM === Chocolatey install ====================================================
 @IF "%path:chocolatey=%" EQU "%path%" (
   ECHO Chocolatey not found, installing...
   @REM ECHO https://chocolatey.org/install
@@ -14,6 +15,8 @@ CLS
   ECHO Restart me if I crashed or looped here, please. Sorry.
   RefreshEnv
 )
+
+@REM === Chocolatey update =====================================================
 @REM SET "choco=%ChocolateyInstall%\bin\choco.exe"
 @REM choco upgrade all --noop
 
@@ -26,82 +29,68 @@ choco upgrade all -y
 @REM Confirm to proceed.
 @REM PAUSE
 
-@ECHO OFF
+@REM === scoop install =========================================================
 WHERE scoop >nul 2>&1
 IF ERRORLEVEL 1 (
   WHERE powershell >nul 2>&1 && (
-    @ECHO ON
-    echo Installing Scoop...
+    ECHO Installing Scoop...
     powershell -Command "Set-ExecutionPolicy RemoteSigned -Scope CurrentUser"
     powershell -Command "irm get.scoop.sh -outfile '%TEMP%\scoop-install.ps1'"
     powershell -Command "& '%TEMP%\scoop-install.ps1' -RunAsAdmin"
-    @ECHO OFF
     WHERE scoop >nul 2>&1
     IF ERRORLEVEL 1 (
-      @ECHO ON
       ECHO Scoop installed! Restart me if I crashed or looped here, please. Sorry.
       RefreshEnv
     ) else (
-      @ECHO ON
-      echo Scoop installation failed!
+      ECHO Scoop installation failed!
     )
   )
 )
 
-@ECHO ON
+@REM === scoop update ==========================================================
 @REM FOR %%i IN ("status" "update *" "cache rm *" "cleanup *" "checkup" "status") DO (cmd /c "scoop %%~i")
-FOR %%i IN (status update) do cmd /c "scoop %%i *"
+FOR %%i IN (status update) DO cmd /c "scoop %%i *"
 cmd /c "scoop cache rm *"
-FOR %%i IN (cleanup checkup status) do cmd /c "scoop %%i *"
+FOR %%i IN (cleanup checkup status) DO cmd /c "scoop %%i *"
 
+@REM === yt-dlp update =========================================================
 @REM See https://redd.it/15oyh34
-WHERE yt-dlp >nul 2>&1 && (yt-dlp -U)
-
-@REM Python & pip updates
-@ECHO OFF
-WHERE py >nul 2>&1 && (
-  @ECHO ON
-  @FOR %%i IN (python) DO @choco list --limit-output -e "%%i" | findstr /i "%%i" >nul || choco install "%%i" -y
-  py -V&pip -V
-  python.exe -m pip install --upgrade pip
-  @REM Installing jq (if not installed) for pip packages update
-  @FOR %%i IN (jq) DO @choco list --limit-output -e "%%i" | findstr /i "%%i" >nul || choco install "%%i" -y
-  @FOR /F %%i IN ('pip list --format json ^| jq -r ".[].name"') DO pip install -U %%i
-  pip cache purge
+WHERE yt-dlp >nul 2>&1 && (
+  yt-dlp -U
 )
 
-@ECHO OFF
-WHERE node >nul 2>&1 && (
-  @ECHO ON
-  @FOR %%i IN (nodejs) DO @choco list --limit-output -e "%%i" | findstr /i "%%i" >nul || choco install "%%i" -y
-  cmd /c "node -v&npm -v"
-  @REM Upgrading to the latest version of npm
-  cmd /c "npm install npm@latest -g"
-  @REM Updating all globally-installed packages
-  cmd /c "npm update -g"
-  @REM npm cache verify
-  cmd /c "npm cache clean -f"
-  cmd /c "npm -v"
-)
+@REM === python3 update ========================================================
+@FOR %%i IN (python) DO @choco list --limit-output -e "%%i" | findstr /i "%%i" >nul || choco install "%%i" -y
+py -V&pip -V
+python.exe -m pip install --upgrade pip
+@REM Installing jq (if not installed) for pip packages update
+@FOR %%i IN (jq) DO @choco list --limit-output -e "%%i" | findstr /i "%%i" >nul || choco install "%%i" -y
+@FOR /F %%i IN ('pip list --format json ^| jq -r ".[].name"') DO pip install -U %%i
+pip cache purge
 
-@ECHO OFF
-@WHERE yarn >nul 2>&1 && (
-  @ECHO ON
-  @FOR %%i IN (yarn) DO @choco list --limit-output -e "%%i" | findstr /i "%%i" >nul || choco install "%%i" -y
-  @REM npm install --global yarn
-  cmd /c "yarn --version"
-  cmd /c "yarn cache clean --all"
-)
+@REM === nodejs update =========================================================
+@FOR %%i IN (nodejs) DO @choco list --limit-output -e "%%i" | findstr /i "%%i" >nul || choco install "%%i" -y
+cmd /c "node -v&npm -v"
+@REM Upgrading to the latest version of npm
+cmd /c "npm install npm@latest -g"
+@REM Updating all globally-installed packages
+cmd /c "npm update -g"
+@REM npm cache verify
+cmd /c "npm cache clean -f"
+cmd /c "npm -v"
 
-@ECHO OFF
-@WHERE pnpm >nul 2>&1 && (
-  @ECHO ON
-  @FOR %%i IN (pnpm) DO @choco list --limit-output -e "%%i" | findstr /i "%%i" >nul || choco install "%%i" -y
-  @REM scoop install nodejs nodejs-lts pnpm
-  @REM pnpm store path
-  @REM pnpm cache delete
-  pnpm store prune
-)
+@REM === yarn update ===========================================================
+@FOR %%i IN (yarn) DO @choco list --limit-output -e "%%i" | findstr /i "%%i" >nul || choco install "%%i" -y
+@REM npm install --global yarn
+cmd /c "yarn --version"
+cmd /c "yarn cache clean --all"
+
+@REM === pnpm update ===========================================================
+@FOR %%i IN (pnpm) DO @choco list --limit-output -e "%%i" | findstr /i "%%i" >nul || choco install "%%i" -y
+@REM scoop install nodejs nodejs-lts pnpm
+@REM pnpm store path
+@REM pnpm cache delete
+pnpm store prune
 
 @REM View what was cached.
 choco cache list
