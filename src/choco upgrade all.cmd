@@ -53,11 +53,12 @@ FOR %%i IN (status update) DO cmd /c "scoop %%i *"
 cmd /c "scoop cache rm *"
 FOR %%i IN (cleanup checkup status) DO cmd /c "scoop %%i *"
 
+@REM === clink update =========================================================
+WHERE clink >nul 2>&1 && (clink update)
+
 @REM === yt-dlp update =========================================================
 @REM See https://redd.it/15oyh34
-WHERE yt-dlp >nul 2>&1 && (
-  yt-dlp -U
-)
+WHERE yt-dlp >nul 2>&1 && (yt-dlp -U)
 
 @REM === python3 update ========================================================
 @FOR %%i IN (python) DO @choco list --limit-output -e "%%i" | findstr /i "%%i" >nul || choco install "%%i" -y
