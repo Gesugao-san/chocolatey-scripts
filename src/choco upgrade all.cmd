@@ -54,7 +54,10 @@ cmd /c "scoop cache rm *"
 FOR %%i IN (cleanup checkup status) DO cmd /c "scoop %%i *"
 
 @REM === clink update =========================================================
-WHERE clink >nul 2>&1 && (clink update)
+WHERE clink >nul 2>&1 && (
+  clink update
+  clink inject
+)
 
 @REM === yt-dlp update =========================================================
 @REM See https://redd.it/15oyh34
