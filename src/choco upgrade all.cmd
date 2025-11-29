@@ -1,5 +1,7 @@
 @REM @CHCP 65001 >nul
 @REM @SET PYTHONIOENCODING=UTF-8
+@REM https://raw.githubusercontent.com/Gesugao-san/chocolatey-scripts/refs/heads/master/src/choco%20upgrade%20all.cmd
+
 @REM Moving to C drive to not advert user name.
 CD C:\
 @ECHO ON
