@@ -1,3 +1,4 @@
+@CD C:\
 scoop install main/7zip main/git
 FOR %%i IN (status update) do cmd /c "scoop %%i *"
 scoop install temurin8-jre temurin16-jdk temurin17-jre temurin21-jre temurin-jre glfw
