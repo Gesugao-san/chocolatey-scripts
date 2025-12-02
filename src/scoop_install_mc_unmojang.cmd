@@ -1,8 +1,8 @@
-scoop install main/7zip main/git -y
+scoop install main/7zip main/git
 FOR %%i IN (status update) do cmd /c "scoop %%i *"
-scoop install temurin8-jre temurin16-jdk temurin17-jre temurin21-jre temurin-jre glfw -y
-scoop bucket add unmojang https://github.com/unmojang/scoop-unmojang -y
-scoop install fjordlauncher -y
+scoop install temurin8-jre temurin16-jdk temurin17-jre temurin21-jre temurin-jre glfw
+scoop bucket add unmojang https://github.com/unmojang/scoop-unmojang
+scoop install fjordlauncher
 scoop bucket add java
 scoop install java/visualvm
 scoop bucket add games
