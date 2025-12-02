@@ -1,3 +1,5 @@
+scoop status 
+scoop update
 scoop install main/7zip main/git
 scoop status 
 scoop update
