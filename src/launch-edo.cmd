@@ -1,3 +1,4 @@
+@REM Apps for Elite Dangerous Odyssey.
 START "" /B "%ProgramFiles(x86)%\EDMarketConnector\EDMarketConnector.exe"
 START "" /B "%ProgramFiles%\EDDiscovery\EDDiscovery.exe"
 START "" /B "%ProgramFiles(x86)%\Elite Observatory\Observatory.exe"
