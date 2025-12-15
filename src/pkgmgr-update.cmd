@@ -8,10 +8,10 @@ CD C:\
 CLS
 
 @REM === clink update =========================================================
-WHERE clink >nul 2>&1 && (
-  cmd /c "clink update"
-  cmd /c "clink inject"
-)
+FOR %%i IN (clink) DO IF EXIST "%%~$PATH:i" (
+  "%%~$PATH:i" update
+  "%%~$PATH:i" inject
+) ELSE ECHO Tool %%i not found, skipping %%i update.
 
 @REM === Chocolatey install ====================================================
 @IF "%path:chocolatey=%" EQU "%path%" (
