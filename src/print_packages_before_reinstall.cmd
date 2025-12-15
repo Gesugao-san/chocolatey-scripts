@@ -1,10 +1,11 @@
-@echo off
-SetLocal EnableExtensions EnableDelayedExpansion
-cd /D "%~dp0"
+@ECHO OFF
+SETLOCAL ENABLEEXTENSIONS ENABLEDELAYEDEXPANSION
+CD /D "%~dp0"
 
+choco list
+scoop list
 npm list
 pnpm list
-choco list
 
-pause
-exit /B
+PAUSE
+EXIT /B
