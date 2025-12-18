@@ -1,4 +1,4 @@
-@REM ECHO OFF
+ECHO OFF
 SETLOCAL ENABLEDELAYEDEXPANSION
 
 SET "SCRIPT_URL=https://raw.githubusercontent.com/Gesugao-san/chocolatey-scripts/refs/heads/master/src/self-updating-test-v2.cmd"
