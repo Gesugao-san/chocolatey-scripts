@@ -1,6 +1,6 @@
 @REM @CHCP 65001 >nul
 @REM @SET PYTHONIOENCODING=UTF-8
-@REM https://raw.githubusercontent.com/Gesugao-san/chocolatey-scripts/refs/heads/master/src/choco%20upgrade%20all.cmd
+@REM https://raw.githubusercontent.com/Gesugao-san/chocolatey-scripts/refs/heads/master/src/pkgmgr-update.cmd
 
 @REM Moving to C drive to not advert user name.
 CD C:\
@@ -12,6 +12,29 @@ FOR %%i IN (clink) DO WHERE %%i >nul 2>&1 && (
   cmd /c "%%i update"
   cmd /c "%%i inject"
 ) || (ECHO Tool %%i not found, skipping %%i update.)
+
+@REM === Internet connection check (multiple hosts) =========================
+@REM ECHO Checking internet connection...
+SET "HOSTS=chocolatey.org scoop.sh github.com python.org nodejs.org yarnpkg.com pnpm.io"
+SET "CONNECTED=0"
+
+FOR %%H IN (%HOSTS%) DO (
+  IF !CONNECTED! EQU 0 (
+    PING -n 1 -w 10000 %%H >nul 2>&1
+    IF NOT ERRORLEVEL 1 SET "CONNECTED=1"
+  )
+)
+
+IF !CONNECTED! EQU 0 (
+  ECHO ERROR: No internet connection!
+  ECHO This script requires internet for Chocolatey, Scoop and other package managers.
+  ECHO Connect to a network and try again.
+  PAUSE
+  EXIT /B 1
+)
+
+@REM ECHO Internet connection available, continuing...
+@REM ECHO.
 
 @REM === Chocolatey install ====================================================
 @IF "%path:chocolatey=%" EQU "%path%" (
